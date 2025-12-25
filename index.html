@@ -1818,22 +1818,27 @@ if (salesLink && salesPanel) {
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  function scrollToContact(e) {
-    e.preventDefault();
-    var contact = document.getElementById('contact');
-    if (contact) {
-      try {
-        contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } catch (e) {
-        contact.scrollIntoView(true);
-      }
-    }
-  }
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const video = document.getElementById('recoVideo');
+  if (!video) return;
 
-  var links = document.querySelectorAll('a[href="#contact"], .cta-button[href="#contact"]');
-  links.forEach(function(link) {
-    link.addEventListener('click', scrollToContact);
-  });
+  video.muted = false;
+  video.volume = 1;
+
+  const enableSound = async () => {
+    try {
+      video.muted = false;
+      video.volume = 1;
+      await video.play();
+    } catch (e) {}
+    window.removeEventListener('touchstart', enableSound);
+    window.removeEventListener('click', enableSound);
+  };
+
+  window.addEventListener('touchstart', enableSound, { passive: true });
+  window.addEventListener('click', enableSound, { passive: true });
 });
+</script>
+
 </script>
